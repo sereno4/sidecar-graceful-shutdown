@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dev-batch-job
+  namespace: sidecar-lab
+
+spec:
+  backoffLimit: 3
+
+  template:
+    metadata:
+      labels:
+        app: batch-job
+
+    spec:
+
+      terminationGracePeriodSeconds: 30
+
+      restartPolicy: Never
+
+      containers:
+
+      - name: batch-processor
+        image: batch-processor:latest
+        imagePullPolicy: Never
+
+        ports:
+        - containerPort: 8080
+
+        envFrom:
+        - configMapRef:
+            name: dev-batch-config
+
+
+      - name: telemetry-sidecar
+        image: telemetry-sidecar:latest
+        imagePullPolicy: Never
+
+        ports:
+        - containerPort: 8081
+
+        envFrom:
+        - configMapRef:
+            name: dev-batch-config

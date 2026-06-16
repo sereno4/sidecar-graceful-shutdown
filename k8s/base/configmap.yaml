@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: batch-config
+  namespace: sidecar-lab
+data:
+  # Batch Processor
+  BATCH_DURATION: "30s"
+  BATCH_ITEMS: "100"
+  BATCH_PORT: "8080"
+  SHARED_VOLUME_PATH: "/shared"
+
+  # Telemetry Sidecar
+  SIDECAR_PORT: "8081"
+  BACKEND_URL: "http://mock-telemetry-backend:8080"
+  BUFFER_SIZE: "1000"
+  FLUSH_INTERVAL: "5s"
+  GRACE_PERIOD_SECONDS: "120"
+  METRICS_PORT: "9090"
